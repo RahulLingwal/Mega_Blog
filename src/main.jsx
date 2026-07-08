@@ -1,10 +1,81 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
 
-createRoot(document.getElementById('root')).render(
+import { Provider } from "react-redux";
+import store from "./store/store";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { AuthLayout } from "./components/index";
+
+import {
+  Home,
+  AddPost,
+  AllPosts,
+  EditPost,
+  Post,
+  Login,
+  Signup,
+} from "./pages/index";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "login",
+        element: (
+          <AuthLayout authentication={false}>
+            <Login />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "signup",
+        element: (
+          <AuthLayout authentication={false}>
+            <Signup />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "all-posts",
+        element: (
+          <AuthLayout authentication>
+            <AllPosts />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "add-post",
+        element: (
+          <AuthLayout authentication>
+            <AddPost />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "edit-post/:slug",
+        element: (
+          <AuthLayout authentication>
+            <EditPost />
+          </AuthLayout>
+        ),
+      },
+      { path: "post/:slug", element: <Post /> },
+    ],
+  },
+]);
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
-)
+);
