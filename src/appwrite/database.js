@@ -2,7 +2,7 @@ import env from "../env/env";
 import { Client, TablesDB, Query } from "appwrite";
 
 export class DatabaseService {
-  client = new this.client();
+  client = new Client();
   database;
 
   constructor() {
@@ -10,7 +10,7 @@ export class DatabaseService {
     this.database = new TablesDB(this.client);
   }
 
-  async createPost({ title, slug, content, featuredImage, status }) {
+  async createPost({ title, slug, content, featuredImage, status, userId }) {
     try {
       return await this.database.createRow({
         databaseID: env.appwriteDatabaseId,
@@ -21,6 +21,7 @@ export class DatabaseService {
           content,
           featuredImage,
           status,
+          userId,
         },
       });
     } catch (error) {
