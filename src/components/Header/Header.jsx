@@ -1,9 +1,8 @@
-import React, { act } from "react";
+import React from "react";
 import { Container, Logo, LogoutBtn } from "../index";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { build } from "vite";
 
 function header() {
   const authStatus = useSelector((state) => state.auth.status);
@@ -52,7 +51,7 @@ function header() {
           </div>
 
           <ul className="flex ml-auto">
-            {navItem.map((item) => {
+            {navItem.map((item) =>
               item.active ? (
                 <li key={item.name}>
                   <button
@@ -62,8 +61,8 @@ function header() {
                     {item.name}
                   </button>
                 </li>
-              ) : null;
-            })}
+              ) : null,
+            )}
 
             {authStatus && (
               <li>
